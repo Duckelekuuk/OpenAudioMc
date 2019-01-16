@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class ConnectCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] strings) {
 
         Player sender = (Player) commandSender;
         OpenAudioMc.getInstance().getPlayerModule().getClient(sender).publishUrl();

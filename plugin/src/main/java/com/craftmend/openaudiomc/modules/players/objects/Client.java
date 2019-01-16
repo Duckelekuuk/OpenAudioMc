@@ -68,6 +68,7 @@ public class Client implements ClientConnection {
             player.sendMessage(OpenAudioMc.getLOG_PREFIX() + "Failed to execute goal.");
             exception.printStackTrace();
         }
+
         this.pin = UUID.randomUUID().toString().subSequence(0, 3).toString();
         TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', OpenAudioMc.getInstance().getConfig().getString("messages.click-to-connect")));
         message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,

@@ -22,26 +22,28 @@ public class AuthenticationService {
     }
 
     private void loadData() {
-        if (OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().getString("keyset.private").equals("not-set")) {
-            //setup process
-            try {
-                RequestResponse requestResponse = OpenAudioMc.getGson().fromJson(readHttp(OpenAudioMc.getInstance().getConfigurationModule().getServer() + "/genid"), RequestResponse.class);
-
-                if (requestResponse.isSuccess()) {
-                    serverKeySet.setPrivateKey(new Key(requestResponse.getPrivateKey().toString()));
-                    serverKeySet.setPublicKey(new Key(requestResponse.getPublicKey().toString()));
-                    OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().set("keyset.private", serverKeySet.getPrivateKey().getValue());
-                    OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().set("keyset.public", serverKeySet.getPublicKey().getValue());
-                } else {
-                    System.out.println(OpenAudioMc.getLOG_PREFIX() + "Failed to request token.");
-                }
-            } catch (IOException exception) {
-                System.out.println(OpenAudioMc.getLOG_PREFIX() + "Failed to request token.");
-                exception.printStackTrace();
-            }
-        } else {
+        if (!OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().getString("keyset.private").equals("not-set")) {
             serverKeySet.setPrivateKey(new Key(OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().getString("keyset.private")));
             serverKeySet.setPublicKey(new Key(OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().getString("keyset.public")));
+            return;
+        }
+
+        //setup process
+        try {
+            RequestResponse requestResponse = OpenAudioMc.getGson().fromJson(readHttp(OpenAudioMc.getInstance().getConfigurationModule().getServer() + "/genid"), RequestResponse.class);
+
+            if (!requestResponse.isSuccess()) {
+                System.out.println(OpenAudioMc.getLOG_PREFIX() + "Failed to request token.");
+                return;
+            }
+
+            serverKeySet.setPrivateKey(new Key(requestResponse.getPrivateKey().toString()));
+            serverKeySet.setPublicKey(new Key(requestResponse.getPublicKey().toString()));
+            OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().set("keyset.private", serverKeySet.getPrivateKey().getValue());
+            OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().set("keyset.public", serverKeySet.getPublicKey().getValue());
+        } catch (IOException exception) {
+            System.out.println(OpenAudioMc.getLOG_PREFIX() + "Failed to request token.");
+            exception.printStackTrace();
         }
     }
 

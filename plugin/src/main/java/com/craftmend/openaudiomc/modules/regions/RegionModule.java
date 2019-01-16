@@ -50,9 +50,9 @@ public class RegionModule {
         }, 10, 10);
     }
 
-    public void registerRegion(String id, RegionProperties propperties) {
+    public void registerRegion(String id, RegionProperties properties) {
         if (id.equals("iamnotactuallyaregionjustadefaultvaluesoyeahokaibye")) return;
-        regionPropertiesMap.put(id, propperties);
+        regionPropertiesMap.put(id, properties);
     }
 
     public void removeRegion(String id) {
@@ -69,6 +69,7 @@ public class RegionModule {
     private List<IRegion> handleRegions(Set<ProtectedRegion> collection) {
         List<IRegion> regions = new ArrayList<>();
         int prio = 0;
+
         for (ProtectedRegion r : collection) {
             if (regionPropertiesMap.get(r.getId()) == null) continue;
             if (r.getPriority() > prio) {

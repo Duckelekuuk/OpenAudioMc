@@ -22,7 +22,7 @@ public class SocketIoConnector {
     @Getter private boolean isConnecting = false;
     private SSLHelper sslHelper;
 
-    public SocketIoConnector() throws KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
+    public SocketIoConnector() throws KeyManagementException, NoSuchAlgorithmException {
         sslHelper = new SSLHelper();
     }
 
