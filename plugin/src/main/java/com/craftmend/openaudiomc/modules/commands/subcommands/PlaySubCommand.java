@@ -53,7 +53,7 @@ public class PlaySubCommand extends SubCommand {
                     client.sendMedia(media);
                 }
                 message(sender, "Media and options created.");
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 message(sender, "Error. Invalid options. Please refer to the command guide.");
             }
             return;

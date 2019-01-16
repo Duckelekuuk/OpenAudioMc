@@ -34,7 +34,7 @@ public class VolumeCommand implements CommandExecutor {
                 } else {
                     client.setVolume(volume);
                 }
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', OpenAudioMc.getInstance().getConfig().getString("messages.client-volume-invalid")));
                 return true;
             }

@@ -9,7 +9,7 @@ import com.craftmend.openaudiomc.modules.speakers.SpeakerModule;
 import com.craftmend.openaudiomc.services.authentication.AuthenticationService;
 import com.craftmend.openaudiomc.services.networking.NetworkingService;
 import com.craftmend.openaudiomc.services.networking.abstracts.AbstractPacketPayload;
-import com.craftmend.openaudiomc.services.networking.addapter.AbstractPacketAddapter;
+import com.craftmend.openaudiomc.services.networking.adapter.AbstractPacketAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
@@ -36,7 +36,7 @@ public final class OpenAudioMc extends JavaPlugin {
     @Getter private static final OpenAudioApi api = new OpenAudioApi();
     @Getter private static final String LOG_PREFIX = "[OpenAudioMc-Log] ";
     @Getter private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(AbstractPacketPayload.class, new AbstractPacketAddapter())
+            .registerTypeAdapter(AbstractPacketPayload.class, new AbstractPacketAdapter())
             .create();
 
     @Override

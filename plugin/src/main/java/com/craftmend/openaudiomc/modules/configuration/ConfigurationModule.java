@@ -30,8 +30,8 @@ public class ConfigurationModule {
         OpenAudioMc.getInstance().saveConfig();
         try {
             dataConfig.save("plugins/OpenAudioMc/data.yml");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 

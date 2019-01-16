@@ -34,8 +34,8 @@ public class MainCommand implements CommandExecutor, TabCompleter {
                 if (args.length != 1) System.arraycopy(args, 1, subArgs, 0, args.length - 1);
                 try {
                     subCommand.onExecute(sender, subArgs);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                     sender.sendMessage(commandModule.getCommandPrefix() + "An error occurred while executing the command. Please check your command.");
                 }
                 return true;

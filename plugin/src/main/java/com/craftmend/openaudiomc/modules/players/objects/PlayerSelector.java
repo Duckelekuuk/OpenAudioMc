@@ -101,7 +101,7 @@ public class PlayerSelector {
                 int z = Integer.valueOf(getArgument("z"));
                 assert initialLocation != null;
                 return new Location(initialLocation.getWorld(), x, y, z);
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 commandSender.sendMessage(OpenAudioMc.getLOG_PREFIX() + "An error occurred when parsing the location as an Integer");
                 return initialLocation;
             }

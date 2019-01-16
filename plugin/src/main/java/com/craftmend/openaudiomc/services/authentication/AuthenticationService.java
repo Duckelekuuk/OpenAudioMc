@@ -35,9 +35,9 @@ public class AuthenticationService {
                 } else {
                     System.out.println(OpenAudioMc.getLOG_PREFIX() + "Failed to request token.");
                 }
-            } catch (IOException e) {
+            } catch (IOException exception) {
                 System.out.println(OpenAudioMc.getLOG_PREFIX() + "Failed to request token.");
-                e.printStackTrace();
+                exception.printStackTrace();
             }
         } else {
             serverKeySet.setPrivateKey(new Key(OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().getString("keyset.private")));
