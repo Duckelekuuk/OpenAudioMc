@@ -9,7 +9,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class RequestResponse {
 
-    private Boolean success;
+    private boolean success;
     private UUID publicKey;
     private UUID privateKey;
 

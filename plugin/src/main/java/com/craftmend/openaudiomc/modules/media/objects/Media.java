@@ -16,9 +16,9 @@ public class Media {
     private String source;
     private int startInstant;
     @Getter private transient int keepTimeout = -1;
-    @Getter @Setter private Boolean doPickup = true;
-    @Getter @Setter private Boolean loop = false;
-    @Getter @Setter private Boolean autoPlay = true;
+    @Getter @Setter private boolean doPickup = true;
+    @Getter @Setter private boolean loop = false;
+    @Getter @Setter private boolean autoPlay = true;
     @Getter @Setter private int fadeTime = 0;
     @Getter @Setter private MediaFlag flag = MediaFlag.DEFAULT;
 
@@ -28,11 +28,11 @@ public class Media {
     }
 
     public Media applySettings(MediaOptions options) {
-        this.loop = options.getLoop();
+        this.loop = options.isLoop();
         this.keepTimeout = options.getExpirationTimeout();
-        this.autoPlay = options.getAutoPlay();
+        this.autoPlay = options.isAutoPlay();
         if (options.getId() != null) this.mediaId = options.getId();
-        this.doPickup = options.getPickUp();
+        this.doPickup = options.isPickUp();
         this.setFadeTime(options.getFadeTime());
         return this;
     }

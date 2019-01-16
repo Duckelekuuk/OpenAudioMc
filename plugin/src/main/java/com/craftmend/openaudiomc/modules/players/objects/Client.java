@@ -29,7 +29,7 @@ public class Client implements ClientConnection {
     @Getter private Player player;
 
     //socket
-    @Getter private Boolean isConnected = false;
+    @Getter private boolean isConnected = false;
     @Getter private String pin = "1234"; //TODO: generate pins
 
     //optional regions and speakers
@@ -179,12 +179,12 @@ public class Client implements ClientConnection {
         }
     }
 
-    private Boolean isPlayingRegion(IRegion region) {
+    private boolean isPlayingRegion(IRegion region) {
         for (IRegion r : currentRegions) if (region.getMedia().getSource().equals(r.getMedia().getSource())) return true;
         return false;
     }
 
-    private Boolean isPlayingSpeaker(ApplicableSpeaker speaker) {
+    private boolean isPlayingSpeaker(ApplicableSpeaker speaker) {
         for (ApplicableSpeaker currentSpeaker : currentSpeakers) if (currentSpeaker.getSpeaker().getSource().equals(speaker.getSpeaker().getSource())) return true;
         return false;
     }
@@ -196,18 +196,18 @@ public class Client implements ClientConnection {
         return null;
     }
 
-    private Boolean containsSpeaker(List<ApplicableSpeaker> list, ApplicableSpeaker speaker) {
+    private boolean containsSpeaker(List<ApplicableSpeaker> list, ApplicableSpeaker speaker) {
         for (ApplicableSpeaker currentSpeaker : list) if (currentSpeaker.getSpeaker().getSource().equals(speaker.getSpeaker().getSource())) return true;
         return false;
     }
 
-    private Boolean containsRegion(List<IRegion> list, IRegion query) {
+    private boolean containsRegion(List<IRegion> list, IRegion query) {
         for (IRegion r : list) if (query.getMedia().getSource().equals(r.getMedia().getSource())) return true;
         return false;
     }
 
     @Override
-    public Boolean isConnected() {
+    public boolean isConnected() {
         return this.isConnected;
     }
 

@@ -18,8 +18,8 @@ import java.security.NoSuchAlgorithmException;
 public class SocketIoConnector {
 
     private Socket socket;
-    @Getter private Boolean isConnected = false;
-    @Getter private Boolean isConnecting = false;
+    @Getter private boolean isConnected = false;
+    @Getter private boolean isConnecting = false;
     private SSLHelper sslHelper;
 
     public SocketIoConnector() throws KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
@@ -90,12 +90,12 @@ public class SocketIoConnector {
         });
     }
 
-    private Boolean canConnect() {
+    private boolean canConnect() {
         return (!isConnecting && !isConnected);
     }
 
     public void send(Client client, AbstractPacket packet) {
-        if (isConnected && client.getIsConnected()) {
+        if (isConnected && client.isConnected()) {
             //check if the player is real, fake players aren't cool
             if (Bukkit.getPlayer(client.getPlayer().getUniqueId()) == null) return;
             packet.setClient(client.getPlayer().getUniqueId());

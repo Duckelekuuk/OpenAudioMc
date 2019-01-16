@@ -25,7 +25,7 @@ public abstract class SubCommand {
         sender.sendMessage(OpenAudioMc.getInstance().getCommandModule().getCommandPrefix() + message);
     }
 
-    public Boolean isAllowed(CommandSender commandSender) {
+    public boolean isAllowed(CommandSender commandSender) {
         return commandSender.hasPermission("openaudiomc.commands." + command)
                 || commandSender.hasPermission("openaudiomc.commands.*")
                 || commandSender.isOp()

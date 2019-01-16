@@ -8,7 +8,7 @@ import lombok.Setter;
 public class SpeakerMedia extends Media {
 
     @Getter @Setter
-    private Boolean distanceFading = false;
+    private boolean distanceFading = false;
 
     public SpeakerMedia(String source) {
         super(source);

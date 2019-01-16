@@ -28,7 +28,7 @@ public class AuthenticationService {
             try {
                 RequestResponse requestResponse = OpenAudioMc.getGson().fromJson(readHttp(OpenAudioMc.getInstance().getConfigurationModule().getServer() + "/genid"), RequestResponse.class);
 
-                if (requestResponse.getSuccess()) {
+                if (requestResponse.isSuccess()) {
                     serverKeySet.setPrivateKey(new Key(requestResponse.getPrivateKey().toString()));
                     serverKeySet.setPublicKey(new Key(requestResponse.getPublicKey().toString()));
                     OpenAudioMc.getInstance().getConfigurationModule().getDataConfig().set("keyset.private", serverKeySet.getPrivateKey().getValue());

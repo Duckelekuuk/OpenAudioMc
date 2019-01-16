@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ClientConnection {
 
-    Boolean isConnected();
+    boolean isConnected();
     String getPin();
     List<Media> getOngoingMedia();
     void playMedia(Media media);

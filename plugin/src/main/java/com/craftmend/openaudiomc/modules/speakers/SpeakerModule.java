@@ -26,7 +26,7 @@ public class SpeakerModule {
     @Getter private Map<SimpleLocation, Speaker> speakerMap = new HashMap<>();
     private Map<String, SpeakerMedia> speakerMediaMap = new HashMap<>();
     private Material playerSkullItem;
-    private Boolean is113;
+    private boolean is113;
 
     public SpeakerModule(OpenAudioMc openAudioMc) {
         openAudioMc.getServer().getPluginManager().registerEvents(new SpeakerCreateListener(openAudioMc, this), openAudioMc);
@@ -63,7 +63,7 @@ public class SpeakerModule {
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(openAudioMc, () -> {
             for (Client client : openAudioMc.getPlayerModule().getClients()) {
-                if (client.getIsConnected()) client.tickSpeakers();
+                if (client.isConnected()) client.tickSpeakers();
             }
         }, 5, 5);
     }
@@ -125,7 +125,7 @@ public class SpeakerModule {
         return skull;
     }
 
-    public Boolean isSpeakerSkull(Block block) {
+    public boolean isSpeakerSkull(Block block) {
         if (block.getState() != null && block.getState() instanceof Skull) {
             Skull skull = (Skull) block.getState();
             if (is113) {

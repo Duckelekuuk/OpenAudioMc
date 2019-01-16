@@ -46,7 +46,7 @@ public class RegionModule {
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(openAudioMc, () -> {
             for (Client client : openAudioMc.getPlayerModule().getClients()) {
-                if (client.getIsConnected()) client.tickRegions();
+                if (client.isConnected()) client.tickRegions();
             }
         }, 10, 10);
     }

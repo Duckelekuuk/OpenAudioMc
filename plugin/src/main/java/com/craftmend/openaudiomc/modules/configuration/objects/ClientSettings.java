@@ -33,7 +33,7 @@ public class ClientSettings {
         return this;
     }
 
-    public Boolean equals(ClientSettings other) {
+    public boolean equals(ClientSettings other) {
         return (other.getTitle().equals(getTitle())
             && other.getBackground().equals(getBackground())
             && other.getWelcomeMessage().equals(getWelcomeMessage())
