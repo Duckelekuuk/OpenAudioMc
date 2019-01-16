@@ -4,14 +4,13 @@ import com.craftmend.openaudiomc.OpenAudioMc;
 import com.craftmend.openaudiomc.modules.configuration.objects.ClientSettings;
 import com.craftmend.openaudiomc.modules.media.objects.Media;
 import com.craftmend.openaudiomc.modules.media.objects.MediaUpdate;
-import com.craftmend.openaudiomc.services.networking.NetworkingService;
-import com.craftmend.openaudiomc.services.networking.packets.*;
 import com.craftmend.openaudiomc.modules.players.events.ClientConnectEvent;
 import com.craftmend.openaudiomc.modules.players.events.ClientDisconnectEvent;
 import com.craftmend.openaudiomc.modules.players.interfaces.ClientConnection;
 import com.craftmend.openaudiomc.modules.regions.objects.IRegion;
 import com.craftmend.openaudiomc.modules.speakers.objects.ApplicableSpeaker;
-
+import com.craftmend.openaudiomc.services.networking.NetworkingService;
+import com.craftmend.openaudiomc.services.networking.packets.*;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -21,7 +20,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class Client implements ClientConnection {
 
@@ -30,7 +32,7 @@ public class Client implements ClientConnection {
 
     //socket
     @Getter private boolean isConnected = false;
-    @Getter private String pin = "1234"; //TODO: generate pins
+    @Getter private String pin = "1234";
 
     //optional regions and speakers
     private List<IRegion> currentRegions = new ArrayList<>();
@@ -62,9 +64,9 @@ public class Client implements ClientConnection {
 
         try {
             OpenAudioMc.getInstance().getNetworkingService().connectIfDown();
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException exception) {
             player.sendMessage(OpenAudioMc.getLOG_PREFIX() + "Failed to execute goal.");
-            e.printStackTrace();
+            exception.printStackTrace();
         }
         this.pin = UUID.randomUUID().toString().subSequence(0, 3).toString();
         TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', OpenAudioMc.getInstance().getConfig().getString("messages.click-to-connect")));
@@ -136,9 +138,10 @@ public class Client implements ClientConnection {
 
         currentSpeakers.forEach(current -> {
             if (containsSpeaker(applicableSpeakers, current)) {
-                ApplicableSpeaker selector = filterSpeaker(applicableSpeakers, current);
-                if (selector != null && (current.getDistance() != selector.getDistance())) {
-                    MediaUpdate mediaUpdate = new MediaUpdate(selector.getDistance(), selector.getSpeaker().getRadius(), 450, current.getSpeaker().getMedia().getMediaId());
+                Optional<ApplicableSpeaker> selector = filterSpeaker(applicableSpeakers, current);
+                if (selector.isPresent() && (current.getDistance() != selector.get().getDistance())) {
+                    ApplicableSpeaker currentSelector = selector.get();
+                    MediaUpdate mediaUpdate = new MediaUpdate(currentSelector.getDistance(), currentSelector.getSpeaker().getRadius(), 450, current.getSpeaker().getMedia().getMediaId());
                     OpenAudioMc.getInstance().getNetworkingService().send(this, new PacketClientUpdateMedia(mediaUpdate));
                 }
             }
@@ -169,41 +172,32 @@ public class Client implements ClientConnection {
                 }
             });
 
-            leftRegions.forEach(exited -> {
-                if (!containsRegion(takeOverMedia, exited)) {
-                    OpenAudioMc.getInstance().getNetworkingService().send(this, new PacketClientDestroyMedia(exited.getMedia().getMediaId()));
-                }
-            });
+            leftRegions.stream()
+                    .filter(exited -> !containsRegion(takeOverMedia, exited))
+                    .forEach(exited -> OpenAudioMc.getInstance().getNetworkingService().send(this, new PacketClientDestroyMedia(exited.getMedia().getMediaId())));
 
             currentRegions = detectedRegions;
         }
     }
 
     private boolean isPlayingRegion(IRegion region) {
-        for (IRegion r : currentRegions) if (region.getMedia().getSource().equals(r.getMedia().getSource())) return true;
-        return false;
+        return currentRegions.stream().anyMatch(currentRegion -> currentRegion.getMedia().getSource().equals(region.getMedia().getSource()));
     }
 
     private boolean isPlayingSpeaker(ApplicableSpeaker speaker) {
-        for (ApplicableSpeaker currentSpeaker : currentSpeakers) if (currentSpeaker.getSpeaker().getSource().equals(speaker.getSpeaker().getSource())) return true;
-        return false;
+        return currentSpeakers.stream().anyMatch(currentSpeaker -> currentSpeaker.getSpeaker().getSource().equals(speaker.getSpeaker().getSource()));
     }
 
-    private ApplicableSpeaker filterSpeaker(List<ApplicableSpeaker> list, ApplicableSpeaker query) {
-        for (ApplicableSpeaker applicableSpeaker : list) {
-            if (applicableSpeaker.getSpeaker() == query.getSpeaker()) return applicableSpeaker;
-        }
-        return null;
+    private Optional<ApplicableSpeaker> filterSpeaker(List<ApplicableSpeaker> speakers, ApplicableSpeaker query) {
+        return speakers.stream().filter(applicableSpeaker -> applicableSpeaker.getSpeaker() == query.getSpeaker()).findFirst();
     }
 
-    private boolean containsSpeaker(List<ApplicableSpeaker> list, ApplicableSpeaker speaker) {
-        for (ApplicableSpeaker currentSpeaker : list) if (currentSpeaker.getSpeaker().getSource().equals(speaker.getSpeaker().getSource())) return true;
-        return false;
+    private boolean containsSpeaker(List<ApplicableSpeaker> speakers, ApplicableSpeaker speaker) {
+        return speakers.stream().anyMatch(currentSpeaker -> speaker.getSpeaker().getSource().equals(currentSpeaker.getSpeaker().getSource()));
     }
 
-    private boolean containsRegion(List<IRegion> list, IRegion query) {
-        for (IRegion r : list) if (query.getMedia().getSource().equals(r.getMedia().getSource())) return true;
-        return false;
+    private boolean containsRegion(List<IRegion> regions, IRegion query) {
+        return regions.stream().anyMatch(region -> query.getMedia().getSource().equals(region.getMedia().getSource()));
     }
 
     @Override
