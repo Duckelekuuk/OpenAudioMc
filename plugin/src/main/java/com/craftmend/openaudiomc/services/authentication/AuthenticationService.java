@@ -4,7 +4,6 @@ import com.craftmend.openaudiomc.OpenAudioMc;
 import com.craftmend.openaudiomc.services.authentication.objects.Key;
 import com.craftmend.openaudiomc.services.authentication.objects.RequestResponse;
 import com.craftmend.openaudiomc.services.authentication.objects.ServerKeySet;
-
 import lombok.Getter;
 
 import java.io.IOException;

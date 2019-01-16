@@ -1,14 +1,13 @@
 package com.craftmend.openaudiomc.services.networking;
 
 import com.craftmend.openaudiomc.OpenAudioMc;
-import com.craftmend.openaudiomc.services.networking.enums.PacketChannel;
-import com.craftmend.openaudiomc.services.networking.handlers.ClientConnectHandler;
-
+import com.craftmend.openaudiomc.modules.players.objects.Client;
 import com.craftmend.openaudiomc.services.networking.abstracts.AbstractPacket;
 import com.craftmend.openaudiomc.services.networking.abstracts.PayloadHandler;
+import com.craftmend.openaudiomc.services.networking.enums.PacketChannel;
+import com.craftmend.openaudiomc.services.networking.handlers.ClientConnectHandler;
 import com.craftmend.openaudiomc.services.networking.handlers.ClientDisconnectHandler;
 import com.craftmend.openaudiomc.services.networking.io.SocketIoConnector;
-import com.craftmend.openaudiomc.modules.players.objects.Client;
 import org.bukkit.Bukkit;
 
 import java.net.URISyntaxException;

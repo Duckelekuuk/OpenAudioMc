@@ -4,10 +4,12 @@ import com.craftmend.openaudiomc.OpenAudioMc;
 import com.craftmend.openaudiomc.modules.players.commands.ConnectCommand;
 import com.craftmend.openaudiomc.modules.players.listeners.PlayerConnectionListener;
 import com.craftmend.openaudiomc.modules.players.objects.Client;
-
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class PlayerModule {
 

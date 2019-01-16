@@ -7,7 +7,6 @@ import com.craftmend.openaudiomc.modules.regions.objects.IRegion;
 import com.craftmend.openaudiomc.modules.regions.objects.Region;
 import com.craftmend.openaudiomc.modules.regions.objects.RegionMedia;
 import com.craftmend.openaudiomc.modules.regions.objects.RegionProperties;
-
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WGBukkit;

@@ -2,6 +2,7 @@ package com.craftmend.openaudiomc.services.networking.addapter;
 
 import com.craftmend.openaudiomc.services.networking.abstracts.AbstractPacketPayload;
 import com.google.gson.*;
+
 import java.lang.reflect.Type;
 
 public class AbstractPacketAddapter implements JsonSerializer<AbstractPacketPayload>, JsonDeserializer<AbstractPacketPayload> {

@@ -8,7 +8,6 @@ import com.craftmend.openaudiomc.modules.speakers.objects.ApplicableSpeaker;
 import com.craftmend.openaudiomc.modules.speakers.objects.SimpleLocation;
 import com.craftmend.openaudiomc.modules.speakers.objects.Speaker;
 import com.craftmend.openaudiomc.modules.speakers.objects.SpeakerMedia;
-
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
